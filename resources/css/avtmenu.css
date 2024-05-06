@@ -1,0 +1,27 @@
+#dropdown {
+    width: 100px
+  }
+  #dropdown li{
+    list-style:none;
+    line-height: 30px;
+    background: white;
+    margin: 2px;
+  }
+   
+  #dropdown li a{
+    margin-left: 10px;
+    color: #1b0101;
+    text-decoration: none;
+  }
+   
+  #dropdown ul{
+    display:none;
+    padding: 0px;
+    background: rgb(247, 246, 246);
+    
+  }
+   
+  #dropdown ul li{
+    background-color: rgb(136, 44, 55);
+    border-radius: 10px;
+  }
