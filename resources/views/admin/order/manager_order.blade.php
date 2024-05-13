@@ -44,31 +44,25 @@
         <table class="table table-striped b-t b-light">
           <thead>
             <tr>
-              <th style="width:20px;">
-                <label class="i-checks m-b-none">
-                  <input type="checkbox"><i></i>
-                </label>
-              </th>
-              <th>Customer name</th>
-              <th>Customer phone</th>
-              <th>Product name</th>
-              <th>Product quantity</th>
-              <th>Product price</th>
-              <th>Order total</th>
-              <th>Order status</th>
+              <th>STT</th>
+              <th>Code</th>
+              <th>Date</th>
+              <th>Status</th>
               <th style="width:30px;"></th>
             </tr>
           </thead>
           <tbody>
+            @php
+              $i = 0;
+            @endphp
             @foreach($order as $key => $orr)
+            @php
+              $i++;
+            @endphp
             <tr>
-              <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-              <td>{{$orr->customer_name}}</td>
-              <td>{{$orr->customer_phone}}</td>
-              <td>{{$orr->product_name}}</td>
-              <td>{{$orr->product_sales_quantity}}</td>
-              <td>{{$orr->product_price}}</td>
-              <td>{{$orr->order_total}}</td>
+              <td><label><i>{{$i}}</i></label></td>
+              <td>{{$orr->order_code}}</td>
+              <td>{{$orr->created_at}}</td>
               <td>{{$orr->order_status}}
               <span class="text-ellipsis">
                 <?php

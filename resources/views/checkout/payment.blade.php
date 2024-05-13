@@ -17,39 +17,38 @@
 			</div>
             <div class="table-responsive cart_info">
 			
-				<table class="table table-condensed">
-					<thead>
-						<tr class="cart_menu">
-							<td class="image">Item</td>
-							<td class="description"></td>
-							<td class="price">Price</td>
-							<td class="quantity">Quantity</td>
-							<td class="total">Total</td>
-							<td></td>
-						</tr>
-					</thead>
-					
-					<tbody>
-						<?php
-							$totalsubtotal = 0;
-						?>
-						{{csrf_field()}}
-						@if(session('cart'))
-                        @foreach(session('cart') as $product_id => $details)
-						<tr rowId="{{$product_id}}">
-							<td data-th="Product">
-								<a href=""><img style="width: 70px; height: 70px;" src="{{asset('resources/images/image_product/'.$details['image'])}}" alt=""></a>
+			<table style="width: 100%; padding-top: 10px;" class="table-bordered">
+          <thead>
+            <tr>
+				<td style="text-align: center; color: #FE980F; font-size:medium;"><b>Item</b></td>
+				<td style="text-align: center; color: #FE980F; font-size:medium;"></td>
+				<td style="text-align: center; color: #FE980F; font-size:medium;"><b>Price</b></td>
+				<td style="text-align: center; color: #FE980F; font-size:medium;"><b>Quantity</b></td>
+				<td style="text-align: center; color: #FE980F; font-size:medium;"><b>Total</b></td>
+				<td></td>
+              
+            </tr>
+          </thead>
+          <tbody >
+            @php
+                $totalsubtotal = 0;
+            @endphp
+          	@if(session('cart'))
+            @foreach(session('cart') as $product_id => $details)
+            <tr rowId="{{$product_id}}">
+			<td data-th="Product">
+								<a href=""><img style="width: 80px; height: 70px; margin-left: 10px; margin-top: 5px;" src="{{asset('resources/images/image_product/'.$details['image'])}}" alt=""></a>
 							</td>
 							<td class="cart_description">
 								<h4><a href=""></a>{{$details['name']}}</h4>
 								<p></p>
 							</td>
 							<td data-th="Price">
-								<p>${{$details['price']}}</p>
+								<p>${{number_format($details['price'],2,'.',',')}}</p>
 							</td>
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
-									<input max="999"  name="cart_qty[{{$product_id}}]" type="number" style="width: 50px;" value="{{$details['qty']}}"/>
+									<input style="text-align: center; margin-left: 5px;" max="99" name="cart_qty[{{$product_id}}]" type="number" min="1" value="{{$details['qty']}}"/>
 									
 								</div>
 							</td>
@@ -59,18 +58,16 @@
 									$total = $details['price']*$details['qty'];
 									$totalsubtotal += $total;
 								?>
-								<p class="cart_total_price">${{number_format($total,0,',','.')}}</p>
+								<p style="font-size: medium;" class="cart_total_price">${{number_format($total,2,'.',',')}}</p>
 							</td>
 							<td class="actions">
 								<a class="btn btn-outline-danger btn-sm delete-cart-product"  href=""><i class="fa fa-times"></i></a>
 							</td>
-						</tr>
-                        @endforeach
-						@endif
-						
-					</tbody>
-					
-				</table>
+            </tr>
+           @endforeach
+		   @endif
+          </tbody>
+        </table>
 				<!-- delivery -->
 				<div class="col-sm-3">
 					<form >

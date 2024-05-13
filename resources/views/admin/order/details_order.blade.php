@@ -157,7 +157,6 @@
               <th>Product name</th>
               <th>Product quantity</th>
               <th>Product price</th>
-              <th>Order total</th>
               <th>Order status</th>
               <th style="width:30px;"></th>
             </tr>
@@ -168,8 +167,7 @@
               <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
               <td>{{$del->product_name}}</td>
               <td>{{$del->product_sales_quantity}}</td>
-              <td>{{$del->product_price}}</td>
-              <td>{{$del->order_total}}</td>
+              <td>${{ number_format($del->product_price,2,'.',',') }}</td>
               <td>{{$del->order_status}}
               <span class="text-ellipsis">
                 <?php
@@ -435,6 +433,6 @@
     </div>
   </div>
   @foreach($details as $key => $del)
-  <a href="{{URL::to('print-order/'.$del->order_id)}}">Print Order</a>
+  <a target="_blank" href="{{URL::to('print-order/'.$del->order_code)}}">Print Order</a>
   @endforeach
 @endsection

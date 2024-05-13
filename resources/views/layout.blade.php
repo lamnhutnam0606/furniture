@@ -13,6 +13,7 @@
     <link href="{{asset('resources/css/animate.css')}}" rel="stylesheet">
 	<link href="{{asset('resources/css/main.css')}}" rel="stylesheet">
 	<link href="{{asset('resources/css/responsive.css')}}" rel="stylesheet">
+	<link href="{{asset('resources/css/nam.css')}}" rel="stylesheet">
     
 	<!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -67,7 +68,7 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="{{URL::to('/trang-chu')}}"><img style="height: 50px; width: 100px;" src="{{asset('resources/images/furniture_logo.png')}}" alt="" /></a>
+							<a href="{{URL::to('/trang-chu')}}"><img style="height: 90px; width: 100px;" src="{{asset('resources/images/logoshop.jpg')}}" alt="" /></a>
 						</div>
 						<div class="btn-group pull-right">
 							<div class="btn-group">
@@ -115,7 +116,7 @@
 								<?php
 									}
 								?>
-								<li><a href="{{URL::to('/show-cart')}}"><i class="fa fa-shopping-cart"></i> Cart <span style="color: brown;" class="badge bg-danger"><i>{{count((array) session('cart'))}}</i></span></a></li>
+								<li><a href="{{URL::to('/show-cart')}}"><i class="fa fa-shopping-cart"></i> Cart <span style="color:#FE980F;" class="badge bg-danger"><i>{{count((array) session('cart'))}}</i></span></a></li>
 								<?php
 									$customer_id = Session::get('customer_id');
 									if($customer_id){
@@ -173,7 +174,7 @@
 						</div>
 					</div>
 					<div class="col-sm-3">
-						<div class="search_box pull-right">
+						<div style="padding-bottom: 10px;" class="search_box pull-right">
 							<form action="{{URL::to('/search-product')}}" method="post">
 								{{csrf_field()}}
 								<input type="text" name="search_product" id="search_product" placeholder="Search"/>
@@ -295,14 +296,12 @@
 						<div class="price-range"><!--price-range-->
 							<h2>Price Range</h2>
 							<div class="well text-center">
-								 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+								 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[0,600]" id="sl2" ><br />
 								 <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
 							</div>
 						</div><!--/price-range-->
 						
-						<div class="shipping text-center"><!--shipping-->
-							<img src="" alt="" />
-						</div><!--/shipping-->
+						
 					
 					</div>
 				</div>
@@ -379,7 +378,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="images/home/iframe4.png" alt="" />
+										<img src="resources/images/iframe4.png" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -411,7 +410,7 @@
 								<li><a href="#">Contact Us</a></li>
 								<li><a href="#">Order Status</a></li>
 								<li><a href="#">Change Location</a></li>
-								<li><a href="#">FAQ’s</a></li>
+								<li><a href="#">FAQs</a></li>
 							</ul>
 						</div>
 					</div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Order_details;
+use App\Models\Product;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -13,10 +14,13 @@ use Illuminate\Support\Facades\Session;
 class OrderController extends Controller
 {
     public function manager_order(){
-        $order = DB::table('tbl_order')
-        ->join('tbl_order_details','tbl_order_details.order_id','=','tbl_order.order_id')
-        ->join('tbl_customer','tbl_customer.customer_id','=','tbl_order.customer_id')
-        ->select('tbl_order.*','tbl_customer.*','tbl_order_details.*')->get();
+        // $order = DB::table('tbl_order')
+        // ->join('tbl_order_details','tbl_order_details.order_id','=','tbl_order.order_id')
+        // ->join('tbl_customer','tbl_customer.customer_id','=','tbl_order.customer_id')
+        // ->join('tbl_payment','tbl_payment.payment_id','=','tbl_order.payment_id')
+        // ->select('tbl_order.*','tbl_customer.*','tbl_order_details.*','tbl_payment.*')->get();
+
+        $order = Order::orderBy('created_at','desc')->get();
         $manager = view('admin.order.manager_order')->with('order',$order);
         return view('dashboard')->with('admin.order.manager_order',$manager);
     }
@@ -66,6 +70,8 @@ class OrderController extends Controller
         return $pdf->stream();
     }
     public function print_order_convert($checkout_code){
-        return $checkout_code;
+        $orderd = Order_details::with('order','product')->where('order_code',$checkout_code)->get();
+        $order = Order::with('customer','shipping','payment')->where('order_code',$checkout_code)->get();
+        return view('admin.order.order_invoices')->with('orderd',$orderd)->with('order',$order);
     }
 }

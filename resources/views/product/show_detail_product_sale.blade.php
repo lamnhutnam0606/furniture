@@ -6,6 +6,11 @@
     <div class="col-sm-5">
         <div class="view-product">
             <img style="height: 250px; width: 250px;" src="{{URL::to('resources/images/image_product/'.$pro->product_img)}}" alt="" />
+            <div class="logo-dis">
+                @foreach ($promotion as $key => $prom )
+                    <h4 style="text-align: center ; color: aqua;">{{$prom->campaign_value}}%</h4>
+                @endforeach
+            </div>
             <h3>ZOOM</h3>
         </div>
         <div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -32,12 +37,14 @@
     <div class="col-sm-7">
         <div class="product-information"><!--/product-information-->
             <img src="{{URL::to('/resources/images/new.jpg')}}" class="newarrival" alt="" />
-                    
+                   
             <h2></h2>
             <p>{{$pro->product_name}} PDID{{$pro->product_id}} </p>
-            <h2 style="color: #FE980F;">${{number_format($pro->product_price,2,'.',',')}}</h2>
+            <p><del>${{number_format($pro->product_price,2,'.',',')}}</del> </p>
+            @foreach ($promotion as $key => $prom )
+                <h2 style="color: #FE980F;">${{number_format($pro->product_price-(($pro->product_price*$prom->campaign_value))/100,2,'.',',')}}</h2>
+            @endforeach
             <img src="{{URL::to('/resources/images/rating.png')}}" alt="" />
-
             <form action="{{URL::to('save-cart/'.$pro->product_id)}}" method="POST">
                {{csrf_field()}}
             <span>
@@ -53,13 +60,13 @@
             </form>
 
             <p><b>Condition:</b>
-            @if ($pro->product_status == 0)
-                Stocking
-            @else
-                Out of stock
-            @endif
+                @if ($pro->product_status == 0)
+                    Stocking
+                @else
+                    Out of Stock
+                @endif
             </p>
-            <p><b>Description: </b><p>{{$pro->product_desc}}</p></p>
+            <p><b>Description:</b><p>{{$pro->product_desc}}</p></p>
             <p><b>Brand: </b>{{$pro->brand_name}}</p>
             <p><b>Category: </b>{{$pro->category_name}}</p>
             <a href=""><img src="{{URL::to('resources/images/share.png')}}" class="share img-responsive"  alt="" /></a>

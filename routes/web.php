@@ -81,6 +81,7 @@ Route::get('print-order/{checkout_code}',[OrderController::class,'print_order'])
 Route::get('/show-product-category/{category_id}',[HomeController::class,'show_product_category']);//show product follow category
 Route::get('/show-product-brand/{brand_id}',[HomeController::class,'show_product_brand']);//show product follow brand
 Route::get('/show-detail-product/{product_id}',[HomeController::class,'show_detail_product']);//show product detail 
+Route::get('/show-detail-product-sale/{product_id}',[HomeController::class,'show_detail_product_sale']);//show product detail 
 
 //cart
 Route::get('/show-cart',[CartController::class,'show_cart']);//show your cart

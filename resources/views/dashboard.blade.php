@@ -343,6 +343,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="{{URL::to('/manager-delivery')}}">Delivery management</a></li>
                     </ul>
                 </li>
+                
                 <!-- <li>
                     <a href="fontawesome.html">
                         <i class="fa fa-bullhorn"></i>

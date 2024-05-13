@@ -70,6 +70,7 @@ class CheckoutController extends Controller
         $payment->save();
 
         //insert order
+        $check_code = substr(md5(microtime()),rand(0,26),5);
         $data_order = $request->all();
         $order = new Order();
         $order->customer_id= Session::get('customer_id');
@@ -77,18 +78,22 @@ class CheckoutController extends Controller
         $order->payment_id= $payment->payment_id;
         $order->order_total= Session::get('totalsubtotal');
         $order->order_status= 'Pending';
+        $order->created_at= now();
+        $order->order_code= $check_code;
         $order->save();
 
         //insert order details
         $data_order_detais = $request->all();
-        $order_details = new Order_details();
-
+        
+        
         foreach(session('cart') as $product_id => $val){
+            $order_details = new Order_details();
             $order_details->order_id = $order->order_id;
             $order_details->product_id = $product_id;
             $order_details->product_name = $val['name'];
             $order_details->product_price = $val['price'];
             $order_details->product_sales_quantity = $val['qty'];
+            $order_details->order_code = $order->order_code;
             $order_details->save();
         }
         if($data_payment['payment_option'] == 1){
