@@ -82,6 +82,14 @@ Route::get('/show-product-category/{category_id}',[HomeController::class,'show_p
 Route::get('/show-product-brand/{brand_id}',[HomeController::class,'show_product_brand']);//show product follow brand
 Route::get('/show-detail-product/{product_id}',[HomeController::class,'show_detail_product']);//show product detail 
 Route::get('/show-detail-product-sale/{product_id}',[HomeController::class,'show_detail_product_sale']);//show product detail 
+Route::post('/price-range',[HomeController::class,'price_range']);//price range 
+Route::get('/wishlist',[HomeController::class,'wishlist_list']);//wishlist
+Route::get('/wishlist-product/{product_id}',[HomeController::class,'wishlist_product']);//wishlist
+Route::get('/wishlist-product-delete/{wishlist_id}',[HomeController::class,'wishlist_product_delete']);//wishlist
+Route::get('/login',[HomeController::class,'login']);//login
+Route::post('/reviews-product/{product_id}',[HomeController::class,'reviews_product']);//review product
+Route::post('/reviews-product-sale/{product_id}',[HomeController::class,'reviews_product_sale']);//review product sale
+
 
 //cart
 Route::get('/show-cart',[CartController::class,'show_cart']);//show your cart

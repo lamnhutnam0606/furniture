@@ -68,37 +68,67 @@
 </div><!--/product-details-->
 
 <div class="category-tab shop-details-tab"><!--category-tab-->
+   
     <div class="col-sm-12">
         <ul class="nav nav-tabs">
-            <li><a href="#companyprofile" data-toggle="tab">Chi tiết sản phẩm</a></li>
-            <li><a href="#reviews" data-toggle="tab">Đánh giá</a></li>
+            <?php
+                $qty_review = 0;
+                foreach($review as $key => $rev){
+                    if($rev->product_id == $pro->product_id){
+                        $qty_review++;
+                    }
+                }
+            ?>
+            <li><a href="#companyprofile" data-toggle="tab">Reviews ({{$qty_review}})</a></li>
+            <li><a href="#reviews" data-toggle="tab">Write Reviews</a></li>
         </ul>
     </div>
     <div class="tab-content">
         <div class="tab-pane fade" id="companyprofile" >
-            <p>{{$pro->product_content}}</p>
+            @foreach ($review as $key => $rev )
+                @if ($rev->product_id == $pro->product_id)
+                <h5 style="padding-left: 10px;">
+                <img src="{{URL::to('resources/images/2.png')}}" style="width: 25px;" alt="">
+                {{$rev->customer->customer_name}}
+                </h5>
+                <p style="padding-left: 10px;">{{$rev->review_content}}</p>
+                <br>
+                @endif
+            @endforeach
         </div>
         
         <div class="tab-pane fade " id="reviews" >
             <div class="col-sm-12">
-                <ul>
+                <!-- <ul>
                     <li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
                     <li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
                     <li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
                 </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p> -->
                 <p><b>Write Your Review</b></p>
                 
-                <form action="#">
-                    <span>
-                        <input type="text" placeholder="Your Name"/>
-                        <input type="email" placeholder="Email Address"/>
-                    </span>
-                    <textarea name="" ></textarea>
-                    <b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-                    <button type="button" class="btn btn-default pull-right">
-                        Submit
-                    </button>
+                <form action="{{URL::to('reviews-product/'.$pro->product_id)}}" method="POST">
+                    @csrf
+                    @if(Session::get('customer_id'))
+                        @foreach ($customer as $key => $cus )
+                            @if($cus->customer_id == Session::get('customer_id'))
+                            <span>
+                                <input type="text" value="{{$cus->customer_name}}" placeholder="Your Name"/>
+                                <input type="email" value="{{$cus->customer_email}}" placeholder="Email Address"/>
+                            </span>
+                                <textarea name="review_content" ></textarea>
+                                <b>Rating: </b> <img src="{{URL::to('resources/images/rating.png')}}" alt="" />
+                                <button type="submit" class="btn btn-default pull-right">
+                                    Submit
+                                </button>
+                            @endif
+                        @endforeach
+                    
+                    @else
+                    <h3 style="color: #FE980F;">Log in to rate the product</h3>
+                    <!-- <a href="{{URL::to('/login-checkout')}}">Go to login</a> -->
+                    @endif
+                    
                 </form>
             </div>
         </div>
@@ -107,12 +137,13 @@
 </div><!--/category-tab-->
 
 <div class="recommended_items"><!--recommended_items-->
-    <h2 class="title text-center">Sản phẩm gợi ý</h2>
+    <h2 class="title text-center">Suggested Products</h2>
     
     <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="item active">
             @foreach($realative as $key => $rel)
+            <a href="{{URL::to('show-detail-product/'.$rel->product_id)}}">
                 <div class="col-sm-4">
                     <div class="product-image-wrapper">
                         <div class="single-products">
@@ -121,12 +152,18 @@
                                 <img style="height: 100px; width: 100px;" src="{{URL::to('resources/images/image_product/'.$rel->product_img)}}" alt="" />
                                 <h4 style="color: grey;">{{$rel->product_name}}</h4>
                                 <p style="color: #FE980F;">${{ number_format($rel->product_price,2,'.',',')}}</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                <form method="post" action="{{URL::to('save-cart/'.$rel->product_id)}}">
+                                {{csrf_field()}}
+                                <button type="submit" class="btn btn-fefault cart">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    Add to cart
+                                </button>                           
+                                </form>                           
                             </div>
-                            
                         </div>
                     </div>
                 </div>
+            </a>
             @endforeach
             </div>
             

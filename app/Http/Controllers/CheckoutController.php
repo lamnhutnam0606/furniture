@@ -41,7 +41,7 @@ class CheckoutController extends Controller
         $result = Customer::where('customer_name',$user_name)->where('customer_password',$user_password)->first();
         if($result){
             Session::put('customer_id',$result->customer_id);
-            return Redirect::to('/checkout');
+            return Redirect::to('/');
         }else{
             Session::put('error','Username or password incorrect!');
             return Redirect::to('/login-checkout');

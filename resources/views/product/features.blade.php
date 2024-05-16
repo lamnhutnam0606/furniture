@@ -2,7 +2,7 @@
 @section('features')
 <div class="col-sm-9 padding-right">
 <div class="recommended_items"><!--recommended_items-->
-    <h2 class="title text-center">Discount Products</h2>
+    <h2 class="title text-center">Discount Collection</h2>
     <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="item active">
@@ -22,6 +22,15 @@
                             </a>
                             <form method="post" action="{{URL::to('save-cart/'.$prom->product_id)}}">
                             {{csrf_field()}}
+                            @if ($wishlist->contains('product_id', $prom->product_id))
+                                <a href="{{URL::to('wishlist-product/'.$prom->product_id)}}">
+                                    <img style="width: 25px;" src="{{URL::to('resources/images/icon_love_r.png')}}" alt="">
+                                </a>
+                            @else
+                                <a href="{{URL::to('wishlist-product/'.$prom->product_id)}}">
+                                    <img style="width: 25px;" src="{{URL::to('resources/images/icon_love.png')}}" alt="">
+                                </a>
+                            @endif
                             <button type="submit" class="btn btn-fefault cart">
                                 <i class="fa fa-shopping-cart"></i>
                                 Add to cart
@@ -48,7 +57,23 @@
                                     <h2 style="line-height: 0;">${{number_format($prom->product->product_price-(($prom->product->product_price*$prom->campaign_value)/100),2,'.',',')}}</h2>
                                     <p>{{$prom->product->product_name}}</p>
                                 </a>
-                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                <form method="post" action="{{URL::to('save-cart/'.$prom->product_id)}}">
+
+                                {{csrf_field()}}
+                                @if ($wishlist->contains('product_id', $prom->product_id))
+                                    <a href="{{URL::to('wishlist-product/'.$prom->product_id)}}">
+                                        <img style="width: 25px;" src="{{URL::to('resources/images/icon_love_r.png')}}" alt="">
+                                    </a>
+                                @else
+                                    <a href="{{URL::to('wishlist-product/'.$prom->product_id)}}">
+                                        <img style="width: 25px;" src="{{URL::to('resources/images/icon_love.png')}}" alt="">
+                                    </a>
+                                @endif
+                                <button type="submit" class="btn btn-fefault cart">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    Add to cart
+                                </button>                           
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -66,7 +91,11 @@
 </div><!--/recommended_items-->
 <div class="features_items"><!--features_items-->
         <h2 class="title text-center">Collection</h2>
+       
+       
         @foreach($product as $key => $pro)
+       
+        
         <div class="col-sm-3">
             <div class="product-image-wrapper">
                 <div class="single-products">
@@ -78,6 +107,15 @@
                         </a>
                             <form method="post" action="{{URL::to('save-cart/'.$pro->product_id)}}">
                             {{csrf_field()}}
+                            @if ($wishlist->contains('product_id', $pro->product_id))
+                                <a href="{{URL::to('wishlist-product/'.$pro->product_id)}}">
+                                    <img style="width: 25px;" src="{{URL::to('resources/images/icon_love_r.png')}}" alt="">
+                                </a>
+                            @else
+                                <a href="{{URL::to('wishlist-product/'.$pro->product_id)}}">
+                                    <img style="width: 25px;" src="{{URL::to('resources/images/icon_love.png')}}" alt="">
+                                </a>
+                            @endif
                             <button type="submit" class="btn btn-fefault cart">
                                 <i class="fa fa-shopping-cart"></i>
                                 Add to cart
@@ -100,7 +138,6 @@
                 </div>
             </div>
         </div>
-        
         @endforeach
     </div><!--features_items-->
     

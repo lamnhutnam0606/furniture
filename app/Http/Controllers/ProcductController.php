@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use App\Models\Product;
+use App\Models\Promotion;
+use App\Models\Wishlist;
+
 session_start();
 
 class ProcductController extends Controller
@@ -198,13 +201,25 @@ class ProcductController extends Controller
         //use model
         $load_category = Category::orderBy('category_id','desc')->get();
         $load_brand = Brand::orderBy('brand_id','desc')->get();
+        $promotion = Promotion::with('product')->limit(4)->get();
+        $wishlist = Wishlist::orderBy('wishlist_id','desc')->get();
 
         $search = $request->search_product;
         $result = Product::where('product_name','like','%'.$search.'%')->get();
         if($result){
-            return view('product.features')->with('category_product',$load_category)->with('brand_product',$load_brand)->with('product',$result);
+            return view('product.features')
+            ->with('category_product',$load_category)
+            ->with('brand_product',$load_brand)
+            ->with('promotion',$promotion)
+            ->with('wishlist',$wishlist)
+            ->with('product',$result);
         }else{
-            return view('product.product.not_found_product')->with('category_product',$load_category)->with('brand_product',$load_brand)->with('product',$result);
+            return view('product.product.not_found_product')
+            ->with('category_product',$load_category)
+            ->with('brand_product',$load_brand)
+            ->with('promotion',$promotion)
+            ->with('wishlist',$wishlist)
+            ->with('product',$result);
         }
     }
     //search product page dashboard

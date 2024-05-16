@@ -71,7 +71,7 @@
 							<a href="{{URL::to('/trang-chu')}}"><img style="height: 90px; width: 100px;" src="{{asset('resources/images/logoshop.jpg')}}" alt="" /></a>
 						</div>
 						<div class="btn-group pull-right">
-							<div class="btn-group">
+							<!-- <div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
 									USA
 									<span class="caret"></span>
@@ -80,9 +80,9 @@
 									<li><a href="#">Canada</a></li>
 									<li><a href="#">UK</a></li>
 								</ul>
-							</div>
+							</div> -->
 							
-							<div class="btn-group">
+							<!-- <div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
 									DOLLAR
 									<span class="caret"></span>
@@ -91,14 +91,14 @@
 									<li><a href="#">Canadian Dollar</a></li>
 									<li><a href="#">Pound</a></li>
 								</ul>
-							</div>
+							</div> -->
 						</div>
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+								<!-- <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-user"></i> Account</a></li> -->
+								<li><a href="{{URL::to('/wishlist')}}"><i><img src="{{URL::to('resources/images/icon_love.png')}}" style="width: 14px;;" alt=""></i> Wishlist</a></li>
 								<?php
 									$customer_id = Session::get('customer_id');
 									$shipping_id = Session::get('shipping_id');
@@ -178,7 +178,9 @@
 							<form action="{{URL::to('/search-product')}}" method="post">
 								{{csrf_field()}}
 								<input type="text" name="search_product" id="search_product" placeholder="Search"/>
-								<button name="search" type="submit" style="color: chocolate; width: 60px; height: 34.5px;">Search</button>
+								<button name="search" type="submit">
+									<img style="width: 31.5px;" src="{{URL::to('resources/images/icon_search.png')}}" alt="">
+								</button>
 							</form>
 						</div>
 					</div>
@@ -296,17 +298,37 @@
 						<div class="price-range"><!--price-range-->
 							<h2>Price Range</h2>
 							<div class="well text-center">
-								 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[0,600]" id="sl2" ><br />
-								 <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+								<form action="{{URL::to('/price-range')}}" method="post">
+								{{ csrf_field() }}
+								<?php
+									$start_price = Session::get('start_price');
+									$end_price = Session::get('end_price');
+									if($start_price && $end_price){
+										
+								?>
+								<input type="text" class="span2" value="[{{$start_price}},{{$end_price}}]" name="price_range" data-slider-min="100" data-slider-max="3000" data-slider-step="5" data-slider-value="[{{$start_price}},{{$end_price}}]" id="sl2" ><br />
+
+
+								<?php
+									}else{
+								?> 
+								<input type="text" class="span2" value="" name="price_range" data-slider-min="100" data-slider-max="3000" data-slider-step="5" data-slider-value="[100,3000]" id="sl2" ><br /> 
+
+								<?php
+									}
+								?>
+								<!-- @if(Session::get('start_price') && Session::get('end_price')) -->
+								<!-- @else -->
+								<!-- @endif -->
+								<b class="pull-left">$ 100</b> <b class="pull-right">$ 3000</b>
+								<button style="color: white;padding: 2px; margin-top: 20px; margin-bottom: 0px; background-color: #FE980F; border : none" type="submit">search</button>
+								</form>
 							</div>
 						</div><!--/price-range-->
-						
-						
-					
 					</div>
 				</div>
-
 				<!-- Features item -->
+
 				@yield('features')
 
 					
